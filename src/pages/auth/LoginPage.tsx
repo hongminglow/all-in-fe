@@ -6,8 +6,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "~/features/hooks/useAuth";
 import { TextInput } from "~/components/base/TextInput";
 import { PasswordInput } from "~/components/base/PasswordInput";
+import { useTranslation } from "react-i18next";
+import { LANGUAGES } from "~/constant/misc";
 
 export const LoginPage = () => {
+  const { t, i18n } = useTranslation();
   const { authenticateUser } = useAuth();
   const form = useForm<TLoginSchema>({
     defaultValues: {
@@ -30,14 +33,40 @@ export const LoginPage = () => {
         <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse delay-500"></div>
       </div>
 
+      {/* Language Switcher - Top Right */}
+      <div className="absolute top-4 right-4 z-20 flex gap-2">
+        <button
+          onClick={() => i18n.changeLanguage(LANGUAGES.ENGLISH)}
+          className={`px-4 py-2 rounded-lg font-medium transition-all ${
+            i18n.language === LANGUAGES.ENGLISH
+              ? "bg-yellow-400 text-black"
+              : "bg-white/10 text-white hover:bg-white/20"
+          }`}
+        >
+          {t("language.english")}
+        </button>
+        <button
+          onClick={() => i18n.changeLanguage(LANGUAGES.CHINESE)}
+          className={`px-4 py-2 rounded-lg font-medium transition-all ${
+            i18n.language === LANGUAGES.CHINESE
+              ? "bg-yellow-400 text-black"
+              : "bg-white/10 text-white hover:bg-white/20"
+          }`}
+        >
+          {t("language.chinese")}
+        </button>
+      </div>
+
       <div className="relative z-10 w-full max-w-md">
         {/* Logo and Title */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl mb-4 shadow-2xl">
             <Dices className="w-10 h-10 text-white" />
           </div>
-          <h1 className="text-white mb-2">DiceRoll Casino</h1>
-          <p className="text-purple-200">Place Your Bets, Win Big!</p>
+          <h1 className="text-white mb-2 text-3xl font-bold">
+            {t("common.appName")}
+          </h1>
+          <p className="text-purple-200">{t("common.tagline")}</p>
         </div>
 
         {/* Login Form */}
@@ -48,13 +77,13 @@ export const LoginPage = () => {
           >
             <div>
               <label htmlFor="username" className="block text-purple-100 mb-2">
-                Username
+                {t("login.username")}
               </label>
               <TextInput
                 name="username"
                 control={form.control}
                 type="text"
-                placeholder="Enter your username"
+                placeholder={t("login.usernamePlaceholder")}
                 className="bg-white/10 border-white/20 text-white placeholder:text-purple-300"
                 required
               />
@@ -62,12 +91,12 @@ export const LoginPage = () => {
 
             <div>
               <label htmlFor="password" className="block text-purple-100 mb-2">
-                Password
+                {t("login.password")}
               </label>
               <PasswordInput
                 name="password"
                 control={form.control}
-                placeholder="Enter your password"
+                placeholder={t("login.passwordPlaceholder")}
                 className="bg-white/10 border-white/20 text-white placeholder:text-purple-300"
               />
             </div>
@@ -76,7 +105,7 @@ export const LoginPage = () => {
               type="submit"
               className="w-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white shadow-lg"
             >
-              Login to Play
+              {t("login.submit")}
             </Button>
           </form>
 
@@ -85,18 +114,18 @@ export const LoginPage = () => {
               href="#"
               className="text-purple-200 hover:text-white transition-colors"
             >
-              Forgot password?
+              {t("login.forgotPassword")}
             </a>
           </div>
 
           <div className="mt-4 text-center">
             <p className="text-purple-200">
-              Don't have an account?{" "}
+              {t("login.noAccount")}
               <a
                 href="#"
                 className="text-yellow-400 hover:text-yellow-300 transition-colors"
               >
-                Sign up now
+                {t("login.signUp")}
               </a>
             </p>
           </div>
@@ -104,7 +133,7 @@ export const LoginPage = () => {
 
         {/* Footer */}
         <div className="mt-8 text-center text-purple-300">
-          <p>🎲 Roll the dice and change your fortune 🎲</p>
+          <p>{t("login.footer")}</p>
         </div>
       </div>
     </div>

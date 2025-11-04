@@ -1,0 +1,23 @@
+{
+  "common": {
+    "appName": "DiceRoll Casino",
+    "tagline": "Place Your Bets, Win Big!"
+  },
+  "login": {
+    "title": "Login to Play",
+    "username": "Username",
+    "usernamePlaceholder": "Enter your username",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "submit": "Login to Play",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "signUp": "Sign up now",
+    "footer": "🎲 Roll the dice and change your fortune 🎲"
+  },
+  "language": {
+    "english": "English",
+    "chinese": "中文",
+    "current": "Language: {{lang}}"
+  }
+}
