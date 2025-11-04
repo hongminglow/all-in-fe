@@ -1,16 +1,32 @@
 import "./App.css";
-import { Route, Routes } from "react-router";
-import HomePage from "./pages/Home";
-import BettingPage from "./pages/Bet";
-import LoginPage from "./pages/Login";
+import { BrowserRouter, Route, Routes } from "react-router";
+
+import ErrorPage from "./pages/ErrorPage";
+import { LoginPage } from "./pages/auth/LoginPage";
+import { HomePage } from "./pages/HomePage";
+import { BetPage } from "./pages/BetPage";
+import SignUpPage from "./pages/auth/SignUpPage";
+import { ROUTES } from "./constant/route";
+import { AuthLayout } from "./components/layout/AuthLayout";
+import { ProtectedLayout } from "./components/layout/ProtectedLayout";
 
 function App() {
   return (
-    <Routes>
-      <Route index element={<LoginPage />} />
-      <Route path="/home" element={<HomePage />} />
-      <Route path="/bet" element={<BettingPage />} />
-    </Routes>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<AuthLayout />}>
+          <Route index path={ROUTES.LOGIN} element={<LoginPage />} />
+          <Route path={ROUTES.SIGNUP} element={<SignUpPage />} />
+        </Route>
+
+        <Route element={<ProtectedLayout />}>
+          <Route index path={ROUTES.HOME} element={<HomePage />} />
+          <Route path={ROUTES.BET} element={<BetPage />} />
+        </Route>
+
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
