@@ -110,6 +110,10 @@ export const HomePage = () => {
     navigate(ROUTES.LOGIN);
   };
 
+  const navigateTestLab = () => {
+    navigate(ROUTES.TESTING);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Header */}
@@ -130,6 +134,12 @@ export const HomePage = () => {
               <Wallet className="w-5 h-5 text-yellow-400" />
               <span className="text-white">$10,000.00</span>
             </div>
+            <Button
+              onClick={navigateTestLab}
+              className="bg-amber-600 hover:bg-amber-500 text-white border-0"
+            >
+              Lab
+            </Button>
             <Button
               onClick={handleLogout}
               className="bg-red-600 hover:bg-red-700 text-white border-0"

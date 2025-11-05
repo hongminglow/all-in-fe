@@ -35,9 +35,9 @@ export const TextInput = <T extends FieldValues>({
         return (
           <div className="flex flex-col space-y-1">
             {label && (
-              <p className="text-white font-medium text-base">
+              <label htmlFor={name} className="block text-purple-100 mb-2">
                 {label} {required && <span className="text-red-500">*</span>}
-              </p>
+              </label>
             )}
 
             <div className="relative">

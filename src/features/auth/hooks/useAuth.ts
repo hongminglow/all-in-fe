@@ -1,4 +1,4 @@
-import type { TLoginSchema } from "~/features/schema/auth";
+import type { TLoginSchema } from "~/features/auth/schema/auth";
 import { createJwt } from "~/utils/token";
 import { ROLES } from "~/constant/auth";
 import Cookies from "js-cookie";

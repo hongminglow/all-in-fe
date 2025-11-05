@@ -1,9 +1,12 @@
 import { Button } from "~/components/ui/button";
 import { Dices } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { createLoginSchema, type TLoginSchema } from "~/features/schema/auth";
+import {
+  createLoginSchema,
+  type TLoginSchema,
+} from "~/features/auth/schema/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuth } from "~/features/hooks/useAuth";
+import { useAuth } from "~/features/auth/hooks/useAuth";
 import { TextInput } from "~/components/base/TextInput";
 import { PasswordInput } from "~/components/base/PasswordInput";
 import { useTranslation } from "react-i18next";
@@ -120,7 +123,7 @@ export const LoginPage = () => {
 
           <div className="mt-4 text-center">
             <p className="text-purple-200">
-              {t("login.noAccount")}
+              {t("login.noAccount")} &nbsp;
               <a
                 href="#"
                 className="text-yellow-400 hover:text-yellow-300 transition-colors"
