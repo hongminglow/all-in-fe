@@ -6,6 +6,7 @@ import { Users, Crown, Zap, LogOut, Wallet } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { ROUTES } from "~/constant/route";
+import { useTranslation } from "react-i18next";
 
 interface Room {
   id: string;
@@ -75,6 +76,7 @@ const rooms: Room[] = [
 ];
 
 export const HomePage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [, setSelectedRoom] = useState("");
 
@@ -124,7 +126,7 @@ export const HomePage = () => {
               <span className="text-2xl">🎲</span>
             </div>
             <div>
-              <h1 className="text-white">DiceRoll Casino</h1>
+              <h1 className="text-white">{t("common.appName")}</h1>
               <p className="text-purple-300">Welcome, Hong Ming</p>
             </div>
           </div>
@@ -138,14 +140,14 @@ export const HomePage = () => {
               onClick={navigateTestLab}
               className="bg-amber-600 hover:bg-amber-500 text-white border-0"
             >
-              Lab
+              {t("common.lab")}
             </Button>
             <Button
               onClick={handleLogout}
               className="bg-red-600 hover:bg-red-700 text-white border-0"
             >
               <LogOut className="w-4 h-4 mr-2" />
-              Logout
+              {t("login.logout")}
             </Button>
           </div>
         </div>
@@ -157,21 +159,21 @@ export const HomePage = () => {
         <div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-gradient-to-br from-yellow-600/40 to-orange-600/40 backdrop-blur-lg border-2 border-yellow-500/50 rounded-xl p-8 text-center shadow-2xl">
             <div className="text-5xl text-yellow-300 mb-3">1,248</div>
-            <div className="text-yellow-100">Active Players</div>
+            <div className="text-yellow-100">{t("home.activePlayers")}</div>
           </div>
           <div className="bg-gradient-to-br from-green-600/40 to-emerald-600/40 backdrop-blur-lg border-2 border-green-500/50 rounded-xl p-8 text-center shadow-2xl">
             <div className="text-5xl text-green-300 mb-3">$2.4M</div>
-            <div className="text-green-100">Won Today</div>
+            <div className="text-green-100">{t("home.wonToday")}</div>
           </div>
           <div className="bg-gradient-to-br from-cyan-600/40 to-blue-600/40 backdrop-blur-lg border-2 border-cyan-500/50 rounded-xl p-8 text-center shadow-2xl">
             <div className="text-5xl text-cyan-300 mb-3">15,678</div>
-            <div className="text-cyan-100">Games Played</div>
+            <div className="text-cyan-100">{t("home.gamesPlayed")}</div>
           </div>
         </div>
 
         <div className="mb-8">
-          <h2 className="text-white mb-2">Choose Your Room</h2>
-          <p className="text-purple-300">Select a room to start playing</p>
+          <h2 className="text-white mb-2">{t("home.chooseRoom")}</h2>
+          <p className="text-purple-300">{t("home.selectRoom")}</p>
         </div>
 
         {/* Rooms Grid */}

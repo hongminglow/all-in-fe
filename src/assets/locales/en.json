@@ -1,7 +1,8 @@
 {
   "common": {
-    "appName": "DiceRoll Casino",
-    "tagline": "Place Your Bets, Win Big!"
+    "appName": "ALL IN",
+    "tagline": "Place Your Bets, Win Big!",
+    "lab": "Lab"
   },
   "login": {
     "title": "Login to Play",
@@ -14,11 +15,19 @@
     "forgotPassword": "Forgot password?",
     "noAccount": "Don't have an account?",
     "signUp": "Sign up now",
-    "footer": "🎲 Roll the dice and change your fortune 🎲"
+    "footer": "🎲 Roll the dice and change your fortune 🎲",
+    "logout": "Logout"
   },
   "language": {
     "english": "English",
     "chinese": "中文",
     "current": "Language: {{lang}}"
+  },
+  "home": {
+    "activePlayers": "Active Players",
+    "wonToday": "Won Today",
+    "gamesPlayed": "Games Played",
+    "chooseRoom": "Choose Your Room",
+    "selectRoom": "Select a room to start playing"
   }
 }

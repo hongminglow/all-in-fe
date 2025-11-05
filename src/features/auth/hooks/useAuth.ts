@@ -4,11 +4,9 @@ import { ROLES } from "~/constant/auth";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router";
 import { ROUTES } from "~/constant/route";
-import { useTranslation } from "react-i18next";
 
 export const useAuth = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
 
   const authenticateUser = (data: TLoginSchema) => {
     if (data.username === "admin" && data.password === "password") {
