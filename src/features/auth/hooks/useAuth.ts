@@ -4,9 +4,11 @@ import { ROLES } from "~/constant/auth";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router";
 import { ROUTES } from "~/constant/route";
+import { useTranslation } from "react-i18next";
 
 export const useAuth = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const authenticateUser = (data: TLoginSchema) => {
     if (data.username === "admin" && data.password === "password") {
@@ -18,6 +20,9 @@ export const useAuth = () => {
       console.log("token granted -->", token);
       Cookies.set("token", token);
       navigate(ROUTES.HOME);
+      return true;
+    } else {
+      return false;
     }
   };
 

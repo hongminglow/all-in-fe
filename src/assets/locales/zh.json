@@ -9,6 +9,7 @@
     "usernamePlaceholder": "输入用户名",
     "password": "密码",
     "passwordPlaceholder": "输入密码",
+    "invalidCredentials": "用户名或密码无效",
     "submit": "登录游戏",
     "forgotPassword": "忘记密码？",
     "noAccount": "没有账户？",

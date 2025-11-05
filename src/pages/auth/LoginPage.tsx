@@ -11,10 +11,12 @@ import { TextInput } from "~/components/base/TextInput";
 import { PasswordInput } from "~/components/base/PasswordInput";
 import { useTranslation } from "react-i18next";
 import { LANGUAGES } from "~/constant/misc";
+import { useState } from "react";
 
 export const LoginPage = () => {
   const { t, i18n } = useTranslation();
   const { authenticateUser } = useAuth();
+  const [loginError, setLoginError] = useState("");
   const form = useForm<TLoginSchema>({
     defaultValues: {
       username: "",
@@ -24,7 +26,12 @@ export const LoginPage = () => {
   });
 
   const onFormSubmit = (data: TLoginSchema) => {
-    authenticateUser(data);
+    const result = authenticateUser(data);
+    if (!result) {
+      setLoginError(t("login.invalidCredentials"));
+    } else {
+      setLoginError("");
+    }
   };
 
   return (
@@ -111,6 +118,10 @@ export const LoginPage = () => {
               {t("login.submit")}
             </Button>
           </form>
+
+          {loginError && (
+            <p className="text-red-500 text-sm font-bold my-2">{loginError}</p>
+          )}
 
           <div className="mt-6 text-center">
             <a
