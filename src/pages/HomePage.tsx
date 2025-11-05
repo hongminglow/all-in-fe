@@ -3,10 +3,12 @@ import { Card } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
 import { Badge } from "~/components/ui/badge";
 import { Users, Crown, Zap, LogOut, Wallet } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { ROUTES } from "~/constant/route";
 import { useTranslation } from "react-i18next";
+import { Howl } from "howler";
+import LobbyMusic from "~/assets/audio/lobby.mp3";
 
 interface Room {
   id: string;
@@ -115,6 +117,24 @@ export const HomePage = () => {
   const navigateTestLab = () => {
     navigate(ROUTES.TESTING);
   };
+
+  useEffect(() => {
+    const sound = new Howl({
+      src: [LobbyMusic],
+      autoplay: true,
+      loop: true,
+      volume: 0.5,
+      onend: function () {
+        console.log("Finished!");
+      },
+    });
+
+    sound.play();
+
+    return () => {
+      sound.stop();
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
