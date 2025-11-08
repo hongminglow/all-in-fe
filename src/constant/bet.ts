@@ -1,0 +1,58 @@
+import type { BetRoom } from "~/types/bet";
+
+export const BETTING_ROOMS: Array<BetRoom> = [
+  {
+    id: "room-1",
+    name: "Beginner's Luck",
+    minBet: 10,
+    maxBet: 100,
+    players: 124,
+    maxPlayers: 500,
+    type: "player",
+  },
+  {
+    id: "room-2",
+    name: "High Roller Suite",
+    minBet: 500,
+    maxBet: 10000,
+    players: 45,
+    maxPlayers: 100,
+    type: "vvip-player",
+  },
+  {
+    id: "room-3",
+    name: "Lightning Rounds",
+    minBet: 50,
+    maxBet: 500,
+    players: 289,
+    maxPlayers: 1000,
+    type: "vip-player",
+  },
+  {
+    id: "room-4",
+    name: "Private Lounge",
+    minBet: 1000,
+    maxBet: 50000,
+    players: 12,
+    maxPlayers: 50,
+    type: "vvip-player",
+  },
+  {
+    id: "room-5",
+    name: "Fortune Hall",
+    minBet: 25,
+    maxBet: 250,
+    players: 567,
+    maxPlayers: 1000,
+    type: "player",
+  },
+  {
+    id: "room-6",
+    name: "Speed Dice Arena",
+    minBet: 100,
+    maxBet: 1000,
+    players: 198,
+    maxPlayers: 500,
+    type: "player",
+  },
+];

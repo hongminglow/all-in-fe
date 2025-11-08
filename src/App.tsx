@@ -15,7 +15,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        di
         <Route element={<AuthLayout />}>
           <Route index path={ROUTES.LOGIN} element={<LoginPage />} />
           <Route path={ROUTES.SIGNUP} element={<SignUpPage />} />

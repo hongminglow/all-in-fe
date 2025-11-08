@@ -3,81 +3,18 @@ import { Card } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
 import { Badge } from "~/components/ui/badge";
 import { Users, Crown, Zap, LogOut, Wallet } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { ROUTES } from "~/constant/route";
 import { useTranslation } from "react-i18next";
-import { Howl } from "howler";
-import LobbyMusic from "~/assets/audio/lobby.mp3";
-
-interface Room {
-  id: string;
-  name: string;
-  minBet: number;
-  maxBet: number;
-  players: number;
-  maxPlayers: number;
-  type: "standard" | "vip" | "turbo";
-}
-
-const rooms: Room[] = [
-  {
-    id: "room-1",
-    name: "Beginner's Luck",
-    minBet: 10,
-    maxBet: 100,
-    players: 124,
-    maxPlayers: 500,
-    type: "standard",
-  },
-  {
-    id: "room-2",
-    name: "High Roller Suite",
-    minBet: 500,
-    maxBet: 10000,
-    players: 45,
-    maxPlayers: 100,
-    type: "vip",
-  },
-  {
-    id: "room-3",
-    name: "Lightning Rounds",
-    minBet: 50,
-    maxBet: 500,
-    players: 289,
-    maxPlayers: 1000,
-    type: "turbo",
-  },
-  {
-    id: "room-4",
-    name: "Private Lounge",
-    minBet: 1000,
-    maxBet: 50000,
-    players: 12,
-    maxPlayers: 50,
-    type: "vip",
-  },
-  {
-    id: "room-5",
-    name: "Fortune Hall",
-    minBet: 25,
-    maxBet: 250,
-    players: 567,
-    maxPlayers: 1000,
-    type: "standard",
-  },
-  {
-    id: "room-6",
-    name: "Speed Dice Arena",
-    minBet: 100,
-    maxBet: 1000,
-    players: 198,
-    maxPlayers: 500,
-    type: "turbo",
-  },
-];
+import { usePlayMusic } from "~/hooks/usePlayMusic";
+import { BETTING_ROOMS } from "~/constant/bet";
+import type { TRoles } from "~/types/auth";
 
 export const HomePage = () => {
+  // Play lobby BGM
+  usePlayMusic();
+
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [, setSelectedRoom] = useState("");
@@ -93,14 +30,16 @@ export const HomePage = () => {
     }
   };
 
-  const getRoomColor = (type: string) => {
+  const getRoomColor = (type: TRoles) => {
     switch (type) {
-      case "vip":
+      case "player":
         return "from-yellow-600 to-orange-600";
-      case "turbo":
+      case "vip-player":
         return "from-cyan-600 to-blue-600";
-      default:
+      case "vvip-player":
         return "from-purple-600 to-indigo-600";
+      default:
+        return "from-yellow-600 to-orange-600";
     }
   };
 
@@ -114,27 +53,9 @@ export const HomePage = () => {
     navigate(ROUTES.LOGIN);
   };
 
-  const navigateTestLab = () => {
-    navigate(ROUTES.TESTING);
-  };
-
-  useEffect(() => {
-    const sound = new Howl({
-      src: [LobbyMusic],
-      autoplay: true,
-      loop: true,
-      volume: 0.5,
-      onend: function () {
-        console.log("Finished!");
-      },
-    });
-
-    sound.play();
-
-    return () => {
-      sound.stop();
-    };
-  }, []);
+  //   const navigateTestLab = () => {
+  //     navigate(ROUTES.TESTING);
+  //   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
@@ -156,12 +77,12 @@ export const HomePage = () => {
               <Wallet className="w-5 h-5 text-yellow-400" />
               <span className="text-white">$10,000.00</span>
             </div>
-            <Button
+            {/* <Button
               onClick={navigateTestLab}
               className="bg-amber-600 hover:bg-amber-500 text-white border-0"
             >
               {t("common.lab")}
-            </Button>
+            </Button> */}
             <Button
               onClick={handleLogout}
               className="bg-red-600 hover:bg-red-700 text-white border-0"
@@ -198,7 +119,7 @@ export const HomePage = () => {
 
         {/* Rooms Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {rooms.map((room) => (
+          {BETTING_ROOMS.map((room) => (
             <Card
               key={room.id}
               className="bg-white/5 backdrop-blur-lg border border-white/10 hover:border-white/30 transition-all duration-300 overflow-hidden group cursor-pointer"
@@ -214,11 +135,11 @@ export const HomePage = () => {
                   {getRoomIcon(room.type)}
                   <span>{room.name}</span>
                 </div>
-                {room.type === "vip" && (
-                  <Badge className="bg-yellow-500 text-black">VIP</Badge>
+                {room.type === "vip-player" && (
+                  <Badge className="bg-cyan-400 text-white">VIP</Badge>
                 )}
-                {room.type === "turbo" && (
-                  <Badge className="bg-cyan-400 text-black">FAST</Badge>
+                {room.type === "vvip-player" && (
+                  <Badge className="bg-purple-500 text-white">VVIP</Badge>
                 )}
               </div>
 
