@@ -1,3 +1,4 @@
+import type { BET_ROOM_TYPES } from "~/constant/bet";
 import type { TRoles } from "./auth";
 
 export interface BetRoom {
@@ -7,5 +8,9 @@ export interface BetRoom {
   maxBet: number;
   players: number;
   maxPlayers: number;
-  type: TRoles;
+  gameType: TBetRoomTypes;
+  permission: TRoles;
 }
+
+export type TBetRoomTypes =
+  (typeof BET_ROOM_TYPES)[keyof typeof BET_ROOM_TYPES];

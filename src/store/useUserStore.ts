@@ -9,6 +9,7 @@ type TUserStoreState = {
 type TUserStoreActions = {
   setUser: (user: TUserDetails | null) => void;
   setBalance: (balance: number | null) => void;
+  reset: () => void;
 };
 
 export const useUserStore = create<
@@ -19,5 +20,6 @@ export const useUserStore = create<
   actions: {
     setUser: (user: TUserDetails | null) => set(() => ({ user })),
     setBalance: (balance: number | null) => set(() => ({ balance })),
+    reset: () => set(() => ({ user: null, balance: null })),
   },
 }));

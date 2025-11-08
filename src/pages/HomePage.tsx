@@ -1,15 +1,11 @@
-import Cookies from "js-cookie";
-import { Card } from "~/components/ui/card";
-import { Button } from "~/components/ui/button";
-import { Badge } from "~/components/ui/badge";
-import { Users, Crown, Zap, LogOut, Wallet } from "lucide-react";
-import { useState } from "react";
 import { useNavigate } from "react-router";
-import { ROUTES } from "~/constant/route";
 import { useTranslation } from "react-i18next";
 import { usePlayMusic } from "~/hooks/usePlayMusic";
 import { BETTING_ROOMS } from "~/constant/bet";
-import type { TRoles } from "~/types/auth";
+import { Header } from "~/components/layout/Header";
+import type { BetRoom } from "~/types/bet";
+import { GameSummaryBanner } from "~/features/bet/components/GameSummaryBanner";
+import { GameRoomCard } from "~/features/bet/components/GameRoomCard";
 
 export const HomePage = () => {
   // Play lobby BGM
@@ -17,100 +13,20 @@ export const HomePage = () => {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [, setSelectedRoom] = useState("");
 
-  const getRoomIcon = (type: string) => {
-    switch (type) {
-      case "vip":
-        return <Crown className="w-5 h-5" />;
-      case "turbo":
-        return <Zap className="w-5 h-5" />;
-      default:
-        return <Users className="w-5 h-5" />;
-    }
+  const handleSelectRoom = (room: BetRoom) => {
+    navigate(`/bet/${room.gameType}`);
   };
-
-  const getRoomColor = (type: TRoles) => {
-    switch (type) {
-      case "player":
-        return "from-yellow-600 to-orange-600";
-      case "vip-player":
-        return "from-cyan-600 to-blue-600";
-      case "vvip-player":
-        return "from-purple-600 to-indigo-600";
-      default:
-        return "from-yellow-600 to-orange-600";
-    }
-  };
-
-  const handleSelectRoom = (roomId: string) => {
-    setSelectedRoom(roomId);
-    navigate("/bet");
-  };
-
-  const handleLogout = () => {
-    Cookies.remove("token");
-    navigate(ROUTES.LOGIN);
-  };
-
-  //   const navigateTestLab = () => {
-  //     navigate(ROUTES.TESTING);
-  //   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Header */}
-      <header className="bg-black/30 backdrop-blur-lg border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center">
-              <span className="text-2xl">🎲</span>
-            </div>
-            <div>
-              <h1 className="text-white">{t("common.appName")}</h1>
-              <p className="text-purple-300">Welcome, Hong Ming</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-lg">
-              <Wallet className="w-5 h-5 text-yellow-400" />
-              <span className="text-white">$10,000.00</span>
-            </div>
-            {/* <Button
-              onClick={navigateTestLab}
-              className="bg-amber-600 hover:bg-amber-500 text-white border-0"
-            >
-              {t("common.lab")}
-            </Button> */}
-            <Button
-              onClick={handleLogout}
-              className="bg-red-600 hover:bg-red-700 text-white border-0"
-            >
-              <LogOut className="w-4 h-4 mr-2" />
-              {t("login.logout")}
-            </Button>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-8">
         {/* Stats Banner - Moved to Top */}
-        <div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-gradient-to-br from-yellow-600/40 to-orange-600/40 backdrop-blur-lg border-2 border-yellow-500/50 rounded-xl p-8 text-center shadow-2xl">
-            <div className="text-5xl text-yellow-300 mb-3">1,248</div>
-            <div className="text-yellow-100">{t("home.activePlayers")}</div>
-          </div>
-          <div className="bg-gradient-to-br from-green-600/40 to-emerald-600/40 backdrop-blur-lg border-2 border-green-500/50 rounded-xl p-8 text-center shadow-2xl">
-            <div className="text-5xl text-green-300 mb-3">$2.4M</div>
-            <div className="text-green-100">{t("home.wonToday")}</div>
-          </div>
-          <div className="bg-gradient-to-br from-cyan-600/40 to-blue-600/40 backdrop-blur-lg border-2 border-cyan-500/50 rounded-xl p-8 text-center shadow-2xl">
-            <div className="text-5xl text-cyan-300 mb-3">15,678</div>
-            <div className="text-cyan-100">{t("home.gamesPlayed")}</div>
-          </div>
-        </div>
+        <GameSummaryBanner />
 
         <div className="mb-8">
           <h2 className="text-white mb-2">{t("home.chooseRoom")}</h2>
@@ -120,65 +36,7 @@ export const HomePage = () => {
         {/* Rooms Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {BETTING_ROOMS.map((room) => (
-            <Card
-              key={room.id}
-              className="bg-white/5 backdrop-blur-lg border border-white/10 hover:border-white/30 transition-all duration-300 overflow-hidden group cursor-pointer"
-              onClick={() => handleSelectRoom(room.id)}
-            >
-              {/* Room Header with Gradient */}
-              <div
-                className={`bg-gradient-to-r ${getRoomColor(
-                  room.type
-                )} p-4 flex items-center justify-between`}
-              >
-                <div className="flex items-center gap-2 text-white">
-                  {getRoomIcon(room.type)}
-                  <span>{room.name}</span>
-                </div>
-                {room.type === "vip-player" && (
-                  <Badge className="bg-cyan-400 text-white">VIP</Badge>
-                )}
-                {room.type === "vvip-player" && (
-                  <Badge className="bg-purple-500 text-white">VVIP</Badge>
-                )}
-              </div>
-
-              {/* Room Details */}
-              <div className="p-6">
-                <div className="space-y-3 mb-6">
-                  <div className="flex justify-between text-purple-200">
-                    <span>Min Bet:</span>
-                    <span className="text-yellow-400">${room.minBet}</span>
-                  </div>
-                  <div className="flex justify-between text-purple-200">
-                    <span>Max Bet:</span>
-                    <span className="text-yellow-400">${room.maxBet}</span>
-                  </div>
-                  <div className="flex justify-between text-purple-200">
-                    <span>Players:</span>
-                    <span className="text-green-400">
-                      {room.players}/{room.maxPlayers}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Player Count Bar */}
-                <div className="mb-4">
-                  <div className="w-full bg-white/10 rounded-full h-2">
-                    <div
-                      className="bg-gradient-to-r from-green-400 to-emerald-500 h-2 rounded-full transition-all duration-500"
-                      style={{
-                        width: `${(room.players / room.maxPlayers) * 100}%`,
-                      }}
-                    ></div>
-                  </div>
-                </div>
-
-                <Button className="w-full bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white">
-                  Join Room
-                </Button>
-              </div>
-            </Card>
+            <GameRoomCard key={room.id} room={room} onJoin={handleSelectRoom} />
           ))}
         </div>
       </main>
