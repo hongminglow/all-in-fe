@@ -12,7 +12,7 @@ export const BET_ROOM_TYPES = {
 
 export const BETTING_ROOMS: Array<BetRoom> = [
   {
-    id: "room-1",
+    id: "798",
     name: "Beginner's Luck",
     minBet: 10,
     maxBet: 100,
@@ -22,7 +22,7 @@ export const BETTING_ROOMS: Array<BetRoom> = [
     permission: ROLES.REGULAR_PLAYER,
   },
   {
-    id: "room-2",
+    id: "123",
     name: "High Roller Suite",
     minBet: 500,
     maxBet: 10000,
@@ -32,7 +32,7 @@ export const BETTING_ROOMS: Array<BetRoom> = [
     permission: ROLES.VVIP_PLAYER,
   },
   {
-    id: "room-3",
+    id: "456",
     name: "Lightning Rounds",
     minBet: 50,
     maxBet: 500,
@@ -42,7 +42,7 @@ export const BETTING_ROOMS: Array<BetRoom> = [
     permission: ROLES.VIP_PLAYER,
   },
   {
-    id: "room-4",
+    id: "4579",
     name: "Private Lounge",
     minBet: 1000,
     maxBet: 50000,
@@ -52,7 +52,7 @@ export const BETTING_ROOMS: Array<BetRoom> = [
     permission: ROLES.VVIP_PLAYER,
   },
   {
-    id: "room-5",
+    id: "7680",
     name: "Fortune Hall",
     minBet: 25,
     maxBet: 250,
@@ -62,7 +62,7 @@ export const BETTING_ROOMS: Array<BetRoom> = [
     permission: ROLES.REGULAR_PLAYER,
   },
   {
-    id: "room-6",
+    id: "1111",
     name: "Speed Dice Arena",
     minBet: 100,
     maxBet: 1000,
