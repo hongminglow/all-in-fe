@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
-import { TextInput } from "~/components/base/TextInput";
-import { PasswordInput } from "~/components/base/PasswordInput";
+import { PasswordInput } from "~/components/base/input/PasswordInput";
 import { useTranslation } from "react-i18next";
+import { TextInput } from "~/components/base/input/TextInput";
 
 export const CreateLabForm = () => {
   const form = useFormContext();

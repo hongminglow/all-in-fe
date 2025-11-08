@@ -7,11 +7,11 @@ import {
 } from "~/features/auth/schema/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "~/features/auth/hooks/useAuth";
-import { TextInput } from "~/components/base/TextInput";
-import { PasswordInput } from "~/components/base/PasswordInput";
+import { PasswordInput } from "~/components/base/input/PasswordInput";
 import { useTranslation } from "react-i18next";
 import { LANGUAGES } from "~/constant/misc";
 import { useState } from "react";
+import { TextInput } from "~/components/base/input/TextInput";
 
 export const LoginPage = () => {
   const { t, i18n } = useTranslation();
