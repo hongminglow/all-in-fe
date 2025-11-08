@@ -15,14 +15,14 @@
 
 Our casino features diverse game modes tailored to different player skill levels and budgets:
 
-| Room                     | Icon | Description                               | Bet Range   | Max Players | Tier    |
-| ------------------------ | ---- | ----------------------------------------- | ----------- | ----------- | ------- |
-| **Beginner's Luck**      | 🌱   | Perfect for newcomers learning the ropes  | $10 - $100  | 500         | Regular |
-| **Lightning Rounds** ⚡  | 🔥   | Fast-paced, high-frequency betting rounds | $50 - $500  | 1,000       | VIP     |
-| **High Roller Suite** 👑 | 💎   | Premium stakes for seasoned players       | $500 - $10k | 100         | VVIP    |
-| **Private Lounge** 🏆    | 🎭   | Exclusive private betting experience      | $1k - $50k  | 50          | VVIP    |
-| **Fortune Hall** 🏛️      | 🌟   | Classic mid-range betting arena           | $25 - $250  | 1,000       | Regular |
-| **Speed Dice Arena** 🎯  | 💨   | Ultra-fast dice rolls & instant payouts   | $100 - $1k  | 500         | VIP     |
+| Room                     | Description                               | Bet Range   | Max Players | Tier    |
+| ------------------------ | ----------------------------------------- | ----------- | ----------- | ------- |
+| **Beginner's Luck**      | Perfect for newcomers learning the ropes  | $10 - $100  | 500         | Regular |
+| **Lightning Rounds** ⚡  | Fast-paced, high-frequency betting rounds | $50 - $500  | 1,000       | VIP     |
+| **High Roller Suite** 👑 | Premium stakes for seasoned players       | $500 - $10k | 100         | VVIP    |
+| **Private Lounge** 🏆    | Exclusive private betting experience      | $1k - $50k  | 50          | VVIP    |
+| **Fortune Hall** 🏛️      | Classic mid-range betting arena           | $25 - $250  | 1,000       | Regular |
+| **Speed Dice Arena** 🎯  | Ultra-fast dice rolls & instant payouts   | $100 - $1k  | 500         | VIP     |
 
 ---
 
@@ -49,33 +49,6 @@ Our casino features diverse game modes tailored to different player skill levels
 - Currency formatting with thousand separators
 - Compact number display (1.2k, 1.5M) for large values
 
-### 🎵 Immersive Audio
-
-- Background music support with Howler.js
-- Play/pause controls for ambient gaming atmosphere
-
-### 🛠️ Developer Experience
-
-- **Form Validation**: React Hook Form + Zod schema validation
-- **State Management**: Zustand for global user/auth state
-- **Type-Safe**: Full TypeScript with strict mode enabled
-- **Code Quality**: ESLint + TypeScript compiler checks
-
----
-
-## 🚀 Tech Stack
-
-| Category     | Technologies                          |
-| ------------ | ------------------------------------- |
-| **Frontend** | React 19, TypeScript, Vite            |
-| **Styling**  | Tailwind CSS 4, Radix UI Components   |
-| **Forms**    | React Hook Form, Zod validation       |
-| **State**    | Zustand (global store)                |
-| **i18n**     | react-i18next (localization)          |
-| **Audio**    | Howler.js                             |
-| **Utils**    | Lucide React (icons), js-cookie, clsx |
-| **Build**    | Vite 7, React Compiler (experimental) |
-
 ---
 
 ## 📦 Getting Started
@@ -100,22 +73,6 @@ npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-### Available Scripts
-
-```bash
-# Development with HMR
-npm run dev
-
-# Type-check & build for production
-npm run build
-
-# Lint code
-npm run lint
-
-# Preview production build
-npm run preview
-```
 
 ---
 
@@ -152,40 +109,6 @@ src/
 └── hooks/
     └── usePlayMusic       # Audio playback hook
 ```
-
----
-
-## 🎯 Key Features Deep Dive
-
-### 1. **Multi-Tier Betting System**
-
-Different bet limits and player tiers create distinct experiences:
-
-- 🌱 Newcomers: Low stakes, learn mechanics
-- 👑 High Rollers: Premium stakes, exclusive rooms
-- 🏆 Private/VIP: Exclusive experiences
-
-### 2. **Smart Currency Formatting**
-
-```typescript
-formatCurrency(1234567); // "1,234,567"
-formatCompactNumber(1500000); // "1.5M"
-formatCompactNumber("1234567.89"); // "1.2M"
-```
-
-### 3. **Bilingual Experience**
-
-Switch languages on-the-fly with persistent state:
-
-- English (en) ↔ 中文 (zh)
-- All UI text, labels, and messages translated
-- Locale-aware formatting (dates, numbers)
-
-### 4. **Protected Routes**
-
-- Auth flows: Login → Authenticate → Access Home/Betting Rooms
-- Automatic redirects based on token validity
-- Role-based room access (Regular/VIP/VVIP)
 
 ---
 
@@ -241,62 +164,9 @@ Switch languages on-the-fly with persistent state:
 
 ---
 
-## 🎨 Design Philosophy
-
-- **Playful Yet Professional**: Purple/indigo gradients with vibrant accents (yellow/orange)
-- **Accessible**: High contrast, readable fonts, keyboard navigation
-- **Fast**: Vite's instant HMR, React Compiler optimizations
-- **Type-Safe**: Full TypeScript coverage prevents runtime errors
-- **Scalable**: Modular components, centralized state, feature flags
-
----
-
-## 📝 Environment Variables
-
-Create `.env.local` (optional):
-
-```env
-VITE_API_BASE_URL=http://localhost:3000
-VITE_ENV=development
-```
-
----
-
-## 🤝 Contributing
-
-1. Fork the repo
-2. Create a feature branch (`git checkout -b feature/amazing-game`)
-3. Commit changes (`git commit -m "Add Roulette mode"`)
-4. Push to branch (`git push origin feature/amazing-game`)
-5. Open a Pull Request
-
----
-
 ## 📄 License
 
 This project is licensed under the MIT License — see LICENSE file for details.
-
----
-
-## 🙌 Credits
-
-Built with ❤️ using:
-
-- [React](https://react.dev)
-- [Vite](https://vitejs.dev)
-- [Tailwind CSS](https://tailwindcss.com)
-- [Radix UI](https://www.radix-ui.com)
-- [Lucide Icons](https://lucide.dev)
-
----
-
-## 📧 Support & Feedback
-
-Have questions or ideas? Reach out!
-
-- 📧 Email: support@all-in-casino.com
-- 💬 Discord: [Join our community](#)
-- 🐛 Issues: [GitHub Issues](#)
 
 ---
 
