@@ -28,6 +28,7 @@
     "wonToday": "Won Today",
     "gamesPlayed": "Games Played",
     "chooseRoom": "Choose Your Room",
-    "selectRoom": "Select a room to start playing"
+    "selectRoom": "Select a room to start playing",
+    "joinRoom": "Join Room"
   }
 }

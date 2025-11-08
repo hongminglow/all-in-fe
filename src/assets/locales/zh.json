@@ -28,6 +28,7 @@
     "wonToday": "今日赢取",
     "gamesPlayed": "游戏次数",
     "chooseRoom": "选择房间",
-    "selectRoom": "选择一个房间开始游戏"
+    "selectRoom": "选择一个房间开始游戏",
+    "joinRoom": "加入房间"
   }
 }
