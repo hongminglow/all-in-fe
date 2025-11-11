@@ -23,7 +23,7 @@ export const betReducer = (
 ) => {
   switch (action.type) {
     case BET_REDUCER_ACTIONS.CHANGE_BET_AMOUNT:
-      draft.betAmount = action.payload;
+      draft.betAmount = action.payload as TGamePrefixQuickBet;
       break;
     case BET_REDUCER_ACTIONS.INCREMENT_BET_AMOUNT:
       draft.betAmount += 10;

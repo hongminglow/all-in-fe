@@ -12,7 +12,7 @@ export const MainHeader = () => {
   const navigate = useNavigate();
   const resetStore = useUserStore((store) => store.actions.reset);
   const user = useUserStore((store) => store.user);
-
+  console.log("user", JSON.stringify(user, null, 2));
   const handleLogout = () => {
     Cookies.remove("token");
     resetStore();

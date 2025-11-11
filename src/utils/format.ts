@@ -98,4 +98,42 @@ export const formatCompactNumber = (
   return formatCurrency(num);
 };
 
-export default formatCurrency;
+export function numbersToRange(input: number[] | readonly number[]): string {
+  if (!input || input.length === 0) return "";
+
+  // Normalize: filter invalid numbers, unique and sorted
+  const nums = Array.from(new Set(input.filter((n) => Number.isFinite(n))))
+    .map((n) => Math.trunc(n))
+    .sort((a, b) => a - b);
+
+  if (nums.length === 0) return "";
+
+  const ranges: string[] = [];
+  let start = nums[0];
+  let prev = nums[0];
+
+  for (let i = 1; i <= nums.length; i++) {
+    const cur = nums[i];
+
+    // if contiguous, extend the current range
+    if (cur === prev + 1) {
+      prev = cur;
+      continue;
+    }
+
+    // close current range
+    if (start === prev) {
+      ranges.push(String(start));
+    } else {
+      ranges.push(`${start}-${prev}`);
+    }
+
+    // start new range if there are remaining numbers
+    if (typeof cur === "number") {
+      start = cur;
+      prev = cur;
+    }
+  }
+
+  return ranges.join(",");
+}

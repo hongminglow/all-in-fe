@@ -26,9 +26,17 @@ export type TBetOptions = (typeof BET_OPTIONS)[keyof typeof BET_OPTIONS];
 export type TBetStakeOptions = {
   id: string;
   type: TBetOptions;
-  target: number;
+  target: number | null;
   odds: number;
   subtotal: number;
+};
+
+export type TQuickBetDetails = {
+  type: TBetOptions;
+  label: string;
+  target: number | null;
+  odds: number;
+  range: string | null;
 };
 
 export type TGamePhase = (typeof GAME_PHASE)[keyof typeof GAME_PHASE];
@@ -60,7 +68,7 @@ export type TGameReducerAction =
 export type TBetReducerAction =
   | {
       type: "change-bet-amount";
-      payload: TGamePrefixQuickBet;
+      payload: TGamePrefixQuickBet | (number & {});
     }
   | {
       type: "increment-bet-amount";

@@ -1,4 +1,4 @@
-import formatCurrency from "~/utils/format";
+import { formatCurrency } from "~/utils/format";
 import { useUserStore } from "~/store/useUserStore";
 import { Wallet } from "lucide-react";
 

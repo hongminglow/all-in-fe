@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import formatCurrency, { formatCompactNumber } from "~/utils/format";
+import { formatCompactNumber, formatCurrency } from "~/utils/format";
 import { GAME_SUMMARY_CONFIG } from "~/constant/misc";
 
 export const GameSummaryBanner = () => {

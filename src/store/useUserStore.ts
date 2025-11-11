@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { TUserDetails } from "~/types/user";
+import { persist } from "zustand/middleware";
 
 type TUserStoreState = {
   user: TUserDetails | null;
@@ -14,12 +15,19 @@ type TUserStoreActions = {
 
 export const useUserStore = create<
   TUserStoreState & { actions: TUserStoreActions }
->((set) => ({
-  user: null,
-  balance: null,
-  actions: {
-    setUser: (user: TUserDetails | null) => set(() => ({ user })),
-    setBalance: (balance: number | null) => set(() => ({ balance })),
-    reset: () => set(() => ({ user: null, balance: null })),
-  },
-}));
+>()(
+  persist(
+    (set) => ({
+      user: null,
+      balance: null,
+      actions: {
+        setUser: (user: TUserDetails | null) => set(() => ({ user })),
+        setBalance: (balance: number | null) => set(() => ({ balance })),
+        reset: () => set(() => ({ user: null, balance: null })),
+      },
+    }),
+    {
+      name: "user-store",
+    }
+  )
+);
