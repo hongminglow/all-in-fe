@@ -1,5 +1,6 @@
 import { BET_REDUCER_ACTIONS, GAME_PREFIX_QUICK_BET } from "~/constant/bet";
 import type {
+  TBetHistoryItem,
   TBetReducerAction,
   TBetStakeOptions,
   TGamePrefixQuickBet,
@@ -9,12 +10,14 @@ export type TBetInitialState = {
   betAmount: TGamePrefixQuickBet;
   accumulatedBet: Array<TBetStakeOptions>;
   accumulatedTotal: number;
+  betHistory: Array<TBetHistoryItem>;
 };
 
 export const betInitialState: TBetInitialState = {
   betAmount: GAME_PREFIX_QUICK_BET[0],
   accumulatedBet: [],
   accumulatedTotal: 0,
+  betHistory: [],
 };
 
 export const betReducer = (
@@ -51,6 +54,12 @@ export const betReducer = (
     case BET_REDUCER_ACTIONS.CLEAR_STAKE:
       draft.accumulatedBet = [];
       draft.accumulatedTotal = 0;
+      break;
+    case BET_REDUCER_ACTIONS.UPDATE_BET_HISTORY:
+      draft.betHistory.push(action.payload);
+      if (draft.betHistory.length > 20) {
+        draft.betHistory.shift();
+      }
       break;
     case BET_REDUCER_ACTIONS.RESET:
       Object.assign(draft, betInitialState);

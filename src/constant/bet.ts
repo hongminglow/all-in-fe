@@ -111,5 +111,11 @@ export const BET_REDUCER_ACTIONS = {
   APPEND_STAKE: "append-stake",
   REMOVE_STAKE: "remove-stake",
   CLEAR_STAKE: "clear-stake",
+  UPDATE_BET_HISTORY: "update-bet-history",
   RESET: "reset",
+} as const;
+
+export const BET_RESULT = {
+  WIN: "win",
+  LOSE: "lose",
 } as const;

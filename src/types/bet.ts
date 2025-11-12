@@ -1,5 +1,6 @@
 import type {
   BET_OPTIONS,
+  BET_RESULT,
   BET_ROOM_TYPES,
   GAME_PHASE,
   GAME_PREFIX_QUICK_BET,
@@ -31,6 +32,14 @@ export type TBetStakeOptions = {
   subtotal: number;
 };
 
+export type TBetHistoryItem = TBetStakeOptions & {
+  createdDate: number;
+  result: number;
+  winLoss: TBetResult;
+  payout: number;
+  dice: [number, number, number];
+};
+
 export type TQuickBetDetails = {
   type: TBetOptions;
   label: string;
@@ -38,6 +47,8 @@ export type TQuickBetDetails = {
   odds: number;
   range: string | null;
 };
+
+export type TBetResult = (typeof BET_RESULT)[keyof typeof BET_RESULT];
 
 export type TGamePhase = (typeof GAME_PHASE)[keyof typeof GAME_PHASE];
 
@@ -90,6 +101,10 @@ export type TBetReducerAction =
     }
   | {
       type: "clear-stake";
+    }
+  | {
+      type: "update-bet-history";
+      payload: TBetHistoryItem;
     }
   | {
       type: "reset";

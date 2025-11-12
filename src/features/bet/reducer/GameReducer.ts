@@ -34,12 +34,7 @@ export const gameReducer = (
       break;
     case GAME_REDUCER_ACTIONS.SETTLE_RESULT:
       draft.gamePhase = GAME_PHASE.SETTLED;
-      // Simulate dice roll results
-      draft.result = [
-        Math.floor(Math.random() * 6) + 1,
-        Math.floor(Math.random() * 6) + 1,
-        Math.floor(Math.random() * 6) + 1,
-      ];
+      draft.result = action.payload.result;
       break;
     case GAME_REDUCER_ACTIONS.RESET:
       Object.assign(draft, gameInitialState);
