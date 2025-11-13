@@ -49,10 +49,22 @@ export const BetRoundSimulator = () => {
   const { state: betState, dispatch: betDispatch } = useBetContext();
   const accumulatedBetRef = useRef(betState.accumulatedBet);
   const idleTimerRef = useRef<number | null>(null);
-
   useEffect(() => {
     accumulatedBetRef.current = betState.accumulatedBet;
   }, [betState.accumulatedBet]);
+
+  useEffect(() => {
+    if (gameState.gamePhase !== GAME_PHASE.IDLE) return;
+
+    const timer = window.setTimeout(() => {
+      gameDispatch({
+        type: GAME_REDUCER_ACTIONS.UPDATE_GAME_PHASE,
+        payload: { gamePhase: GAME_PHASE.START },
+      });
+    }, 1500);
+
+    return () => window.clearTimeout(timer);
+  }, [gameState.gamePhase]);
 
   useEffect(() => {
     if (gameState.gamePhase !== GAME_PHASE.ROLLING) return;
@@ -108,10 +120,9 @@ export const BetRoundSimulator = () => {
 
     idleTimerRef.current = window.setTimeout(() => {
       gameDispatch({
-        type: GAME_REDUCER_ACTIONS.UPDATE_GAME_PHASE,
-        payload: { gamePhase: GAME_PHASE.IDLE },
+        type: GAME_REDUCER_ACTIONS.RESET,
       });
-    }, 2000);
+    }, 10000);
   }, [betDispatch, gameDispatch, gameState.gamePhase]);
 
   useEffect(() => {
