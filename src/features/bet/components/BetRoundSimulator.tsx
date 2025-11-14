@@ -11,6 +11,7 @@ import {
 import { GAME_ROUND_CONFIG } from "~/constant/misc";
 import { rollThreeDice } from "~/utils/dice";
 import type { TBetStakeOptions } from "~/types/bet";
+import { useUserStore } from "~/store/useUserStore";
 
 const SMALL_TOTALS = new Set(GAME_ROUND_CONFIG[BET_OPTIONS.SMALL]);
 const BIG_TOTALS = new Set(GAME_ROUND_CONFIG[BET_OPTIONS.BIG]);
@@ -47,8 +48,11 @@ const isWinningStake = (
 export const BetRoundSimulator = () => {
   const { state: gameState, dispatch: gameDispatch } = useGameContext();
   const { state: betState, dispatch: betDispatch } = useBetContext();
+  const { updateBalance } = useUserStore((store) => store.actions);
+
   const accumulatedBetRef = useRef(betState.accumulatedBet);
   const idleTimerRef = useRef<number | null>(null);
+
   useEffect(() => {
     accumulatedBetRef.current = betState.accumulatedBet;
   }, [betState.accumulatedBet]);
@@ -91,6 +95,9 @@ export const BetRoundSimulator = () => {
       const payout = didWin
         ? Number((stake.subtotal * stake.odds).toFixed(2))
         : -stake.subtotal;
+
+      // update user balance based on payout
+      updateBalance(payout);
 
       betDispatch({
         type: BET_REDUCER_ACTIONS.UPDATE_BET_HISTORY,
