@@ -2,19 +2,23 @@
 
 import * as React from "react";
 import * as RechartsPrimitive from "recharts";
+import type {
+  NameType as TooltipNameType,
+  Payload as TooltipPayload,
+  ValueType as TooltipValueType,
+} from "recharts/types/component/DefaultTooltipContent";
+import type { TooltipContentProps } from "recharts/types/component/Tooltip";
+import type { LegendPayload } from "recharts/types/component/DefaultLegendContent";
+import type { Props as LegendComponentProps } from "recharts/types/component/Legend";
 
 import { cn } from "~/utils/general";
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const;
 
-type TooltipPayloadItem = NonNullable<
-  React.ComponentProps<typeof RechartsPrimitive.Tooltip>["payload"]
->[number];
+type TooltipPayloadItem = TooltipPayload<TooltipValueType, TooltipNameType>;
 
-type LegendPayloadItem = NonNullable<
-  RechartsPrimitive.LegendProps["payload"]
->[number];
+type LegendPayloadItem = LegendPayload;
 
 export type ChartConfig = {
   [k in string]: {
@@ -112,6 +116,19 @@ ${colorConfig
 
 const ChartTooltip = RechartsPrimitive.Tooltip;
 
+type ChartTooltipContentProps = TooltipContentProps<
+  TooltipValueType,
+  TooltipNameType
+> &
+  React.HTMLAttributes<HTMLDivElement> & {
+    hideLabel?: boolean;
+    hideIndicator?: boolean;
+    indicator?: "line" | "dot" | "dashed";
+    nameKey?: string;
+    labelKey?: string;
+    color?: string;
+  };
+
 function ChartTooltipContent({
   active,
   payload,
@@ -126,14 +143,8 @@ function ChartTooltipContent({
   color,
   nameKey,
   labelKey,
-}: React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
-  React.ComponentProps<"div"> & {
-    hideLabel?: boolean;
-    hideIndicator?: boolean;
-    indicator?: "line" | "dot" | "dashed";
-    nameKey?: string;
-    labelKey?: string;
-  }) {
+  ...divProps
+}: ChartTooltipContentProps) {
   const { config } = useChart();
 
   const tooltipLabel = React.useMemo(() => {
@@ -182,9 +193,10 @@ function ChartTooltipContent({
   return (
     <div
       className={cn(
-        "border-border/50 bg-background grid min-w-[8rem] items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl",
+        "border-border/50 bg-background grid min-w-32 items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl",
         className
       )}
+      {...divProps}
     >
       {!nestLabel ? tooltipLabel : null}
       <div className="grid gap-1.5">
@@ -195,7 +207,7 @@ function ChartTooltipContent({
 
           return (
             <div
-              key={item.dataKey}
+              key={`${item.dataKey ?? index}`}
               className={cn(
                 "[&>svg]:text-muted-foreground flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5",
                 indicator === "dot" && "items-center"
@@ -259,24 +271,27 @@ function ChartTooltipContent({
 
 const ChartLegend = RechartsPrimitive.Legend;
 
+type ChartLegendContentProps = React.HTMLAttributes<HTMLDivElement> & {
+  payload?: readonly LegendPayloadItem[];
+  verticalAlign?: LegendComponentProps["verticalAlign"];
+  hideIcon?: boolean;
+  nameKey?: string;
+};
+
 function ChartLegendContent({
   className,
   hideIcon = false,
   payload,
   verticalAlign = "bottom",
   nameKey,
-}: React.ComponentProps<"div"> &
-  Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
-    hideIcon?: boolean;
-    nameKey?: string;
-  }) {
+}: ChartLegendContentProps) {
   const { config } = useChart();
 
   if (!payload?.length) {
     return null;
   }
 
-  const items = (payload ?? []) as LegendPayloadItem[];
+  const items = payload ?? [];
 
   return (
     <div
@@ -286,13 +301,13 @@ function ChartLegendContent({
         className
       )}
     >
-      {items.map((item) => {
+      {items.map((item, index) => {
         const key = `${nameKey || item.dataKey || "value"}`;
         const itemConfig = getPayloadConfigFromPayload(config, item, key);
 
         return (
           <div
-            key={item.value}
+            key={item.value ?? `${item.dataKey ?? index}`}
             className={cn(
               "[&>svg]:text-muted-foreground flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3"
             )}
