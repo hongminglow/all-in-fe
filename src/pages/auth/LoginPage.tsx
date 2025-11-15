@@ -19,8 +19,8 @@ export const LoginPage = () => {
   const [loginError, setLoginError] = useState("");
   const form = useForm<TLoginSchema>({
     defaultValues: {
-      username: "",
-      password: "",
+      username: "admin",
+      password: "password",
     },
     resolver: zodResolver(createLoginSchema),
   });
