@@ -6,16 +6,20 @@ import {
   type TLoginSchema,
 } from "~/features/auth/schema/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuth } from "~/features/auth/hooks/useAuth";
 import { PasswordInput } from "~/components/base/input/PasswordInput";
 import { useTranslation } from "react-i18next";
 import { LANGUAGES } from "~/constant/misc";
 import { useState } from "react";
 import { TextInput } from "~/components/base/input/TextInput";
+import {
+  authenticateUser,
+  type TAuthenticateUserRequest,
+} from "~/services/auth/mutations/authenticateUser";
+import { useMutation } from "@tanstack/react-query";
 
 export const LoginPage = () => {
   const { t, i18n } = useTranslation();
-  const { authenticateUser } = useAuth();
+  //   const { authenticateUser } = useAuth();
   const [loginError, setLoginError] = useState("");
   const form = useForm<TLoginSchema>({
     defaultValues: {
@@ -25,13 +29,30 @@ export const LoginPage = () => {
     resolver: zodResolver(createLoginSchema),
   });
 
+  const { mutate: login } = useMutation({
+    mutationFn: (data: TAuthenticateUserRequest) => authenticateUser(data),
+    onSuccess: (data) => {
+      if (data.token) {
+        console.log("token granted..", data.token);
+      }
+    },
+  });
+
+  //   const onFormSubmit = (data: TLoginSchema) => {
+  //     const result = authenticateUser(data);
+  //     if (!result) {
+  //       setLoginError(t("login.invalidCredentials"));
+  //     } else {
+  //       setLoginError("");
+  //     }
+  //   };
+
   const onFormSubmit = (data: TLoginSchema) => {
-    const result = authenticateUser(data);
-    if (!result) {
-      setLoginError(t("login.invalidCredentials"));
-    } else {
-      setLoginError("");
-    }
+    console.log("submitting form...");
+    login({
+      identifier: data.username,
+      password: data.password,
+    });
   };
 
   return (
