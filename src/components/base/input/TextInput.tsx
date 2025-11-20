@@ -15,6 +15,7 @@ type TextInputProps<T extends FieldValues> = {
   label?: string;
   required?: boolean;
   slot?: React.ReactElement;
+  disabledError?: boolean;
 } & Omit<React.ComponentProps<"input">, "slot">;
 
 export const TextInput = <T extends FieldValues>({
@@ -22,8 +23,9 @@ export const TextInput = <T extends FieldValues>({
   control,
   rules,
   label,
-  required,
+  required = false,
   slot,
+  disabledError = false,
   ...inputProps
 }: TextInputProps<T>) => {
   return (
@@ -45,7 +47,7 @@ export const TextInput = <T extends FieldValues>({
               {slot}
             </div>
 
-            {invalid && error && (
+            {!disabledError && invalid && error && (
               <p className="font-semibold text-sm text-red-500">
                 {error.message}
               </p>

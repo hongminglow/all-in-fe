@@ -5,7 +5,7 @@ import ErrorPage from "./pages/ErrorPage";
 import { LoginPage } from "./pages/auth/LoginPage";
 import { HomePage } from "./pages/HomePage";
 import { BetPage } from "./pages/BetPage";
-import SignUpPage from "./pages/auth/SignUpPage";
+import { SignUpPage } from "./pages/auth/SignUpPage";
 import { ROUTES } from "./constant/route";
 import { AuthLayout } from "./components/layout/AuthLayout";
 import { ProtectedLayout } from "./components/layout/ProtectedLayout";

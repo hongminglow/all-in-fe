@@ -11,15 +11,12 @@ import { useTranslation } from "react-i18next";
 import { LANGUAGES } from "~/constant/misc";
 import { useState } from "react";
 import { TextInput } from "~/components/base/input/TextInput";
-import {
-  authenticateUser,
-  type TAuthenticateUserRequest,
-} from "~/services/auth/mutations/authenticateUser";
-import { useMutation } from "@tanstack/react-query";
+import { useAuth } from "~/features/auth/hooks/useAuth";
+import { ROUTES } from "~/constant/route";
 
 export const LoginPage = () => {
   const { t, i18n } = useTranslation();
-  //   const { authenticateUser } = useAuth();
+  const { authenticateUser } = useAuth();
   const [loginError, setLoginError] = useState("");
   const form = useForm<TLoginSchema>({
     defaultValues: {
@@ -29,31 +26,31 @@ export const LoginPage = () => {
     resolver: zodResolver(createLoginSchema),
   });
 
-  const { mutate: login } = useMutation({
-    mutationFn: (data: TAuthenticateUserRequest) => authenticateUser(data),
-    onSuccess: (data) => {
-      if (data.token) {
-        console.log("token granted..", data.token);
-      }
-    },
-  });
-
-  //   const onFormSubmit = (data: TLoginSchema) => {
-  //     const result = authenticateUser(data);
-  //     if (!result) {
-  //       setLoginError(t("login.invalidCredentials"));
-  //     } else {
-  //       setLoginError("");
-  //     }
-  //   };
+  //   const { mutate: login } = useMutation({
+  //     mutationFn: (data: TAuthenticateUserRequest) => authenticateUser(data),
+  //     onSuccess: (data) => {
+  //       if (data.token) {
+  //         console.log("token granted..", data.token);
+  //       }
+  //     },
+  //   });
 
   const onFormSubmit = (data: TLoginSchema) => {
-    console.log("submitting form...");
-    login({
-      identifier: data.username,
-      password: data.password,
-    });
+    const result = authenticateUser(data);
+    if (!result) {
+      setLoginError(t("login.invalidCredentials"));
+    } else {
+      setLoginError("");
+    }
   };
+
+  //   const onFormSubmit = (data: TLoginSchema) => {
+  //     console.log("submitting form...");
+  //     login({
+  //       identifier: data.username,
+  //       password: data.password,
+  //     });
+  //   };
 
   return (
     <div className="min-h-screen bg-linear-to-br from-purple-900 via-indigo-900 to-blue-900 flex items-center justify-center p-4">
@@ -157,7 +154,7 @@ export const LoginPage = () => {
             <p className="text-purple-200">
               {t("login.noAccount")} &nbsp;
               <a
-                href="#"
+                href={ROUTES.SIGNUP}
                 className="text-yellow-400 hover:text-yellow-300 transition-colors"
               >
                 {t("login.signUp")}

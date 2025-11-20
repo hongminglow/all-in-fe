@@ -4,7 +4,6 @@ import { PERMISSIONS, ROLES } from "./auth";
 export const USER_OVERALL_INFORMATION: TUserDetails = {
   username: "admin",
   email: "admin@example.com",
-  avatar: "https://avatar.iran.liara.run/username?username=hm",
   roles: ROLES.VVIP_PLAYER,
   permissions: [
     PERMISSIONS.VIEW_HOME,
