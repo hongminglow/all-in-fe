@@ -7,6 +7,14 @@ export const USER_OVERALL_INFORMATION: TUserDetails = {
   email: "admin@example.com",
   phone: "1234567890",
   role: ROLES.VVIP_PLAYER,
+  permission: [
+    "home:view",
+    "home:join",
+    "home:free-ticket",
+    "bet:regular",
+    "bet:double",
+    "bet:special",
+  ],
   balance: 1000000,
 };
 
