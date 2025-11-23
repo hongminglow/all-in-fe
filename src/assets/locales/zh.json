@@ -26,6 +26,9 @@
     "footer": "🎲 转动骰子，改变命运 🎲",
     "logout": "登出"
   },
+  "register": {
+    "accCreationFailed": "账户创建失败"
+  },
   "language": {
     "english": "English",
     "chinese": "中文",

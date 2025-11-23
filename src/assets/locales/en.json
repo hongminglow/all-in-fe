@@ -26,6 +26,9 @@
     "footer": "🎲 Roll the dice and change your fortune 🎲",
     "logout": "Logout"
   },
+  "register": {
+    "accCreationFailed": "Account creation failed"
+  },
   "language": {
     "english": "English",
     "chinese": "中文",
