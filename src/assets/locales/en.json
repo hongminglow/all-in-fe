@@ -27,6 +27,8 @@
     "logout": "Logout"
   },
   "register": {
+    "accCreationSuccessTitle": "Success! Your account has been created.",
+    "accCreationSuccessDescription": "Please login with your new account.",
     "accCreationFailed": "Account creation failed"
   },
   "language": {

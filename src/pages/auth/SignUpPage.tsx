@@ -19,9 +19,12 @@ import {
 } from "~/services/auth/mutations/signUpUser";
 import { useNavigate } from "react-router";
 import { Spinner } from "~/components/ui/spinner";
+import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert";
+import { CheckCircle2Icon } from "lucide-react";
 
 export const SignUpPage = () => {
   const { t, i18n } = useTranslation();
+  const [showAlert, setShowAlert] = useState(false);
   const [signUpError, setSignUpError] = useState("");
   const navigate = useNavigate();
   const form = useForm<TSignUpSchema>({
@@ -43,7 +46,10 @@ export const SignUpPage = () => {
     onSuccess: (data) => {
       if (data) {
         setSignUpError("");
-        navigate(ROUTES.LOGIN);
+        setShowAlert(true);
+        setTimeout(() => {
+          navigate(ROUTES.LOGIN);
+        }, 1500);
       }
     },
     onError: () => {
@@ -187,6 +193,18 @@ export const SignUpPage = () => {
         <div className="mt-8 text-center text-purple-300">
           <p>{t("login.footer")}</p>
         </div>
+
+        {showAlert && (
+          <div className="fixed right-3 bottom-5 ">
+            <Alert className="bg-white/10 text-white backdrop-blur-lg rounded-2xl p-4 shadow-2xl border border-white/20">
+              <CheckCircle2Icon />
+              <AlertTitle>{t("register.accCreationSuccessTitle")}</AlertTitle>
+              <AlertDescription className="text-white/50">
+                {t("register.accCreationSuccessDescription")}
+              </AlertDescription>
+            </Alert>
+          </div>
+        )}
       </div>
     </div>
   );
