@@ -26,8 +26,8 @@ export const LoginPage = () => {
   const { grantUserCredentials } = useAuth();
   const form = useForm<TLoginSchema>({
     defaultValues: {
-      username: "admin",
-      password: "password",
+      username: "",
+      password: "",
     },
     resolver: zodResolver(createLoginSchema),
   });
