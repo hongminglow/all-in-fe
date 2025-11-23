@@ -91,7 +91,7 @@ export const GameRoomCard = ({ room, onJoin }: TGameRoomCardProps) => {
           className="w-full bg-linear-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 hover:cursor-pointer text-white"
           onClick={() => onJoin(room)}
           disabled={
-            !verifyPermissionAccess(room.permission, user?.roles ?? null)
+            !verifyPermissionAccess(room.permission, user?.role ?? null)
           }
         >
           {t("home.joinRoom")}

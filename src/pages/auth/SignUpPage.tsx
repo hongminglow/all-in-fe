@@ -2,7 +2,6 @@ import { Button } from "~/components/ui/button";
 import { useForm } from "react-hook-form";
 import {
   createSignUpSchema,
-  type TLoginSchema,
   type TSignUpSchema,
 } from "~/features/auth/schema/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,14 +10,20 @@ import { useTranslation } from "react-i18next";
 import { LANGUAGES } from "~/constant/misc";
 import { useState } from "react";
 import { TextInput } from "~/components/base/input/TextInput";
-import { useAuth } from "~/features/auth/hooks/useAuth";
 import { ROUTES } from "~/constant/route";
 import { PhoneNumberInput } from "~/components/base/input/PhonNumberInput";
+import { useMutation } from "@tanstack/react-query";
+import {
+  signUpUser,
+  type TSignUpUserRequest,
+} from "~/services/auth/mutations/signUpUser";
+import { useNavigate } from "react-router";
+import { Spinner } from "~/components/ui/spinner";
 
 export const SignUpPage = () => {
   const { t, i18n } = useTranslation();
-  const { authenticateUser } = useAuth();
   const [signUpError, setSignUpError] = useState("");
+  const navigate = useNavigate();
   const form = useForm<TSignUpSchema>({
     defaultValues: {
       username: "",
@@ -33,18 +38,26 @@ export const SignUpPage = () => {
 
   console.log("form errors", form.formState.errors);
 
-  //   const { mutate: login } = useMutation({
-  //     mutationFn: (data: TAuthenticateUserRequest) => authenticateUser(data),
-  //     onSuccess: (data) => {
-  //       if (data.token) {
-  //         console.log("token granted..", data.token);
-  //       }
-  //     },
-  //   });
+  const { mutate: signUp, isPending } = useMutation({
+    mutationFn: (data: TSignUpUserRequest) => signUpUser(data),
+    onSuccess: (data) => {
+      if (data) {
+        setSignUpError("");
+        navigate(ROUTES.LOGIN);
+      }
+    },
+    onError: () => {
+      setSignUpError(t("register.accCreationFailed"));
+    },
+  });
 
-  const onFormSubmit = (data: TLoginSchema) => {
+  const onFormSubmit = (data: TSignUpSchema) => {
+    const formObj = {
+      ...data,
+      phoneNumber: `+${data.countryCode}${data.phoneNumber}`,
+    };
     console.log("sign up data", JSON.stringify(data, null, 2));
-    // const result = authenticateUser(data);
+    signUp(formObj);
     // if (!result) {
     //   setSignUpError(t("login.invalidCredentials"));
     // } else {
@@ -146,9 +159,10 @@ export const SignUpPage = () => {
 
             <Button
               type="submit"
+              disabled={isPending}
               className="w-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white shadow-lg"
             >
-              Sign Up
+              {isPending ? <Spinner /> : "Sign Up"}
             </Button>
           </form>
 

@@ -1,26 +1,19 @@
-import { serverApi } from "~/lib/ky";
+import { apiData } from "~/lib/ky";
+import type { TUserDetails } from "~/types/user";
 
 export type TAuthenticateUserRequest = {
   identifier: string;
   password: string;
 };
 
-type TAuthenticateUserResponse = {
+export type TAuthenticateUserResponse = {
   token: string;
-  user: {
-    id: number;
-    username: string;
-    email: string;
-    phone: string;
-    created_at: string;
-  };
+  user: TUserDetails;
 };
 
 export const authenticateUser = (body: TAuthenticateUserRequest) => {
-  console.log("body request...", JSON.stringify(body, null, 2));
-  return serverApi
-    .post("login", {
-      json: body,
-    })
-    .json<TAuthenticateUserResponse>();
+  return apiData<TAuthenticateUserResponse>("login", {
+    method: "post",
+    json: body,
+  });
 };

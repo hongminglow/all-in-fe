@@ -13,11 +13,17 @@ import { useState } from "react";
 import { TextInput } from "~/components/base/input/TextInput";
 import { useAuth } from "~/features/auth/hooks/useAuth";
 import { ROUTES } from "~/constant/route";
+import {
+  authenticateUser,
+  type TAuthenticateUserRequest,
+} from "~/services/auth/mutations/authenticateUser";
+import { useMutation } from "@tanstack/react-query";
+import { Spinner } from "~/components/ui/spinner";
 
 export const LoginPage = () => {
   const { t, i18n } = useTranslation();
-  const { authenticateUser } = useAuth();
   const [loginError, setLoginError] = useState("");
+  const { grantUserCredentials } = useAuth();
   const form = useForm<TLoginSchema>({
     defaultValues: {
       username: "admin",
@@ -26,31 +32,31 @@ export const LoginPage = () => {
     resolver: zodResolver(createLoginSchema),
   });
 
-  //   const { mutate: login } = useMutation({
-  //     mutationFn: (data: TAuthenticateUserRequest) => authenticateUser(data),
-  //     onSuccess: (data) => {
-  //       if (data.token) {
-  //         console.log("token granted..", data.token);
-  //       }
-  //     },
-  //   });
-
-  const onFormSubmit = (data: TLoginSchema) => {
-    const result = authenticateUser(data);
-    if (!result) {
+  const { mutate: login, isPending } = useMutation({
+    mutationFn: (data: TAuthenticateUserRequest) => authenticateUser(data),
+    onSuccess: (data) => {
+      grantUserCredentials(data);
+    },
+    onError: () => {
       setLoginError(t("login.invalidCredentials"));
-    } else {
-      setLoginError("");
-    }
-  };
+    },
+  });
 
   //   const onFormSubmit = (data: TLoginSchema) => {
-  //     console.log("submitting form...");
-  //     login({
-  //       identifier: data.username,
-  //       password: data.password,
-  //     });
+  //     const result = authenticateUser(data);
+  //     if (!result) {
+  //       setLoginError(t("login.invalidCredentials"));
+  //     } else {
+  //       setLoginError("");
+  //     }
   //   };
+
+  const onFormSubmit = (data: TLoginSchema) => {
+    login({
+      identifier: data.username,
+      password: data.password,
+    });
+  };
 
   return (
     <div className="min-h-screen bg-linear-to-br from-purple-900 via-indigo-900 to-blue-900 flex items-center justify-center p-4">
@@ -131,9 +137,10 @@ export const LoginPage = () => {
 
             <Button
               type="submit"
+              disabled={isPending}
               className="w-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white shadow-lg"
             >
-              {t("login.submit")}
+              {isPending ? <Spinner /> : t("login.submit")}
             </Button>
           </form>
 

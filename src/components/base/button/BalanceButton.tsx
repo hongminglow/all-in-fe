@@ -3,7 +3,7 @@ import { useUserStore } from "~/store/useUserStore";
 import { Wallet } from "lucide-react";
 
 export const BalanceButton = () => {
-  const balance = useUserStore((store) => store.balance);
+  const balance = useUserStore((store) => store.user?.balance);
 
   return (
     <div className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-lg">

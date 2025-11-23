@@ -5,15 +5,12 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router";
 import { ROUTES } from "~/constant/route";
 import { useUserStore } from "~/store/useUserStore";
-import {
-  USER_INITIAL_BALANCE,
-  USER_OVERALL_INFORMATION,
-} from "~/constant/user";
+import { USER_OVERALL_INFORMATION } from "~/constant/user";
+import type { TAuthenticateUserResponse } from "~/services/auth/mutations/authenticateUser";
 
 export const useAuth = () => {
   const navigate = useNavigate();
   const setUser = useUserStore((store) => store.actions.setUser);
-  const setBalance = useUserStore((store) => store.actions.setBalance);
 
   const authenticateUser = (data: TLoginSchema) => {
     if (data.username === "admin" && data.password === "password") {
@@ -25,7 +22,6 @@ export const useAuth = () => {
       console.log("token granted -->", token);
       Cookies.set("token", token);
       setUser(USER_OVERALL_INFORMATION);
-      setBalance(USER_INITIAL_BALANCE);
       navigate(ROUTES.HOME);
       return true;
     } else {
@@ -33,5 +29,13 @@ export const useAuth = () => {
     }
   };
 
-  return { authenticateUser };
+  const grantUserCredentials = (data: TAuthenticateUserResponse) => {
+    if (data.token) {
+      Cookies.set("token", data.token);
+      setUser(data.user);
+      navigate(ROUTES.HOME);
+    }
+  };
+
+  return { authenticateUser, grantUserCredentials };
 };

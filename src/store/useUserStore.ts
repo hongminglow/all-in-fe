@@ -4,12 +4,10 @@ import { persist } from "zustand/middleware";
 
 type TUserStoreState = {
   user: TUserDetails | null;
-  balance: number | null;
 };
 
 type TUserStoreActions = {
   setUser: (user: TUserDetails | null) => void;
-  setBalance: (balance: number | null) => void;
   updateBalance: (balance: number) => void;
   reset: () => void;
 };
@@ -20,20 +18,25 @@ export const useUserStore = create<
   persist(
     (set) => ({
       user: null,
-      balance: null,
       actions: {
         setUser: (user: TUserDetails | null) => set(() => ({ user })),
-        setBalance: (balance: number | null) => set(() => ({ balance })),
-        updateBalance: (balance: number) =>
-          set((state) => ({ balance: (state.balance ?? 0) + balance })),
-        reset: () => set(() => ({ user: null, balance: null })),
+        updateBalance: (amount: number) =>
+          set((state) => {
+            if (!state.user) return {};
+            return {
+              user: {
+                ...state.user,
+                balance: state.user.balance + amount,
+              },
+            };
+          }),
+        reset: () => set(() => ({ user: null })),
       },
     }),
     {
       name: "user-store",
       partialize: (state) => ({
         user: state.user,
-        balance: state.balance,
       }),
     }
   )

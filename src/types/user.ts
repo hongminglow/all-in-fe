@@ -1,8 +1,10 @@
-import type { TPermissions, TRoles } from "./auth";
+import type { TRoles } from "./auth";
 
 export type TUserDetails = {
+  id: number;
   username: string;
   email: string;
-  roles: TRoles;
-  permissions: TPermissions[];
+  phone: string;
+  role: TRoles;
+  balance: number;
 };
