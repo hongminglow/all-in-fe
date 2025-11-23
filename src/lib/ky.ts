@@ -1,4 +1,5 @@
 import ky from "ky";
+import type { TApiResponse } from "~/types/services";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:3000";
 
@@ -24,3 +25,15 @@ export const serverApi = ky.create({
     ],
   },
 });
+
+type KyInput = Parameters<typeof serverApi>[0];
+type KyInit = Parameters<typeof serverApi>[1];
+
+export async function apiJson<TData>(input: KyInput, init?: KyInit) {
+  return serverApi(input, init).json<TApiResponse<TData>>();
+}
+
+export async function apiData<TData>(input: KyInput, init?: KyInit) {
+  const response = await apiJson<TData>(input, init);
+  return response.data;
+}
